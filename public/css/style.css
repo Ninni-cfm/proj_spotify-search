@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #333;
+    color: #fff;
+}
+
+a {
+    color: #fff;
+    text-decoration: none;
+}
+a:visited {
+    color: #fff;
+}
+
+/****************************************************************************/
+.err404 {
+    padding-top: 40vh;
+    text-align: center;
+    color: #fff;
+}
+.err404 a {
+    color: #fff;
+    text-decoration: none;
+    margin: 2rem;
+}
+.err404 a:visited {
+    color: #fff;
+}
