@@ -40,6 +40,10 @@ app.get('/', (req, res) => {
 
 app.get('/artist-search', (req, res) => {
 
+    spotifyApi.clientCredentialsGrant()
+        .then(data => spotifyApi.setAccessToken(data.body['access_token']))
+        .catch(error => console.log('Something went wrong when retrieving an access token', error));
+
     spotifyApi
         .searchArtists(req.query.artist, {}) //{ limit: 10, offset: 0 }
         .then(data => {
