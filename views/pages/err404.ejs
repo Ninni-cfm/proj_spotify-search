@@ -9,16 +9,20 @@
     <title><%= title %> - Error 404</title>
 </head>
 
-<body>
-    <main class="err404">
+<body class="err404">
+
+    <%- include('../include/header')  %>
+
+    <main>
         <h1>Error 404</h1>
         <h2>Route '<%= url %>' not found</h2>
 
         <a href="javascript:history.back()">BACK</a>
     </main>
 
-    <script src="/assets/js/main.js"></script>
+    <%- include('../include/footer')  %>
 
+    <!-- <script src="/assets/js/main.js"></script> -->
 </body>
 
 </html>

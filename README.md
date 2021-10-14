@@ -121,3 +121,56 @@ Du kannst alle deine Routen in der app.js behalten, je nachdem wo es steht:
 Erstelle eine einfache Index-Route, die eine Homepage darstellt. Auf dieser Seite solltest du ein kleines Suchformular haben, das ein Eingabefeld mit dem Namen eines Künstlers und eine Schaltfläche hat, die die Anfrage absendet.
 
 Dieses Formular sollte seine Anfrage an /artist-search richten (action="/artist-search", method="GET").
+
+---
+
+### Step 2 | Ergebnisse für Künstlersuche anzeigen
+
+Okay, unser Suchformular unter /artist-search route ist abgeschickt. Wir haben diese Route immer noch nicht erstellt, also lass es uns nun tun! Diese Route erhält den Suchbegriff aus der deinem search inputfeld und stellt eine Suchanfrage mit einer der Methoden des npm-Pakets Spotify. Du hast die Dokumentation zwar geöffnet, aber wir werden dir bei deinem ersten Schritt helfen.😉
+
+Die Methode, die wir aus dem npm-Paket verwenden werden, ist: spotifyApi.searchArtists(). In dieser Route solltest du so etwas wie dies haben:
+
+```
+spotifyApi
+    .searchArtists(/*'HERE GOES THE QUERY ARTIST'*/)
+    .then(data => {
+        console.log('The received data from the API: ', data.body);
+        // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
+    })
+    .catch(err => console.log('The error while searching artists occurred: ', err));
+```
+
+Um die Informationen zu den gefundenen Künstlern anzuzeigen, erstelle die Datei artist-search-results.ejs im Ordner views und zeige den Namen, das Bild und den Button (oder den Link) an, um die Alben eines bestimmten Künstlers in einer neuen Ansicht anzuzeigen (für den Moment erstelle dir einfach den Button/den Link, den Rest erledigen wir im nächsten Schritt). Auch hier ist das Styling nicht deine Priorität, also gehen wir zum nächsten Schritt über.
+
+---
+
+## 4 | Alben anzeigen
+
+Auf der Seite artist-search-results.ejs haben wir den Button/Link Alben anzeigen erstellt. Die Benutzer sollten nach dem Anklicken auf eine andere Seite weitergeleitet werden und dort alle Alben des jeweiligen Künstlers sehen können. Hinweis: Die URL sollte die Künstler-ID 🤓 enthalten und sich dynamisch ändern.
+
+```
+<a href="/albums/someArtistIdGoesHere">View Albums</a>
+```
+
+Lasst uns also eine neue Seite erstellen - albums.ejs, auf der alle Ergebnisse angezeigt werden. Stelle sicher, dass der Name und das Cover von jedem Album angezeigt wird, und füge einen Button/Link hinzu, um die Titel zu sehen (nächste Iteration).
+
+⚡ Schau dir die .getArtistAlbums() Methode in der [spotify-web-api-node](https://www.npmjs.com/package/spotify-web-api-node) Dokumentation an.
+
+Tipp: Deine Route sollte wie folgt aussehen:
+
+```
+app.get('/albums/:artistId', (req, res, next) => {
+    // .getArtistAlbums() code goes here
+});
+```
+
+---
+
+## 5 | Tracks anzeigen
+
+Erstelle den Link Titel anzeigen auf der Album-Seite. Dieser Link sollte dich zu einer Seite mit einer Liste aller Titel auf einem bestimmten Album führen.
+Tipp: Der Link zur Titelseite sollte die ID jedes Albums enthalten.
+
+Hinweis: ⚡ Siehe dir die Methode .getAlbumTracks() in der spotify-web-api-node Dokumentation an.
+
+Ein Track-Objekt wird mit einer preview_url geliefert, die die Quelle für eine 30-Sekunden-Vorschau eines bestimmten Songs ist. Du kannst diese in einen [HTML-Audio-Tag](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio) einfügen, um die Vorschau abspielen zu lassen.

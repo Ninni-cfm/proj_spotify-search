@@ -6,18 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/style.css">
+
     <title> <%= title %> </title>
 </head>
 
-<body>
+<body class="results">
 
-    <div class="artists">
+    <%- include('../include/header')  %>
+
+    <main class="results-container">
+
         <% artists.items.forEach(artist => { %>
-        <% console.log(artist) %>
-        <%- include('../include/artist-card.ejs', {artist: artist}) %>
-        <% }) %>
-        <hr>
-    </div>
+
+        <div class="results-card">
+
+            <% if (artist.images.length > 0) { %>
+            <img src="<%= artist.images[0].url %>" alt="<%= artist.name %>">
+            <% } else { %>
+            <img src="/img/no-pic.png" alt="<%= artist.name %>">
+            <% } %>
+
+            <h3><%= artist.name %> </h3>
+            <a href=<%= `/albums/${artist.id}` %>>View Albums</a>
+
+        </div> <% }) %>
+
+    </main>
+
+    <%- include('../include/footer')  %>
 
 </body>
 

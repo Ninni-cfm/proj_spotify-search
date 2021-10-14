@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+
+    <title> <%= title %> </title>
+</head>
+
+<body class="tracks">
+
+    <%- include('../include/header')  %>
+
+    <main class="tracks-container">
+
+        <% tracks.items.forEach(track => { %>
+
+        <% console.log(track) %>
+
+        <div class="tracks-detail">
+            <h3><%= track.name %></h3>
+            <audio controls>
+                <source src="<%= track.preview_url %>">
+            </audio>
+        </div>
+        <% }) %>
+
+    </main>
+
+    <%- include('../include/footer')  %>
+
+</body>
+
+</html>

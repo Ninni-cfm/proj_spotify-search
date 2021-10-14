@@ -1,4 +1,4 @@
-const title = { title: 'MySpotify' };
+const title = 'MySpotify';
 const port = process.env.PORT || 3000;
 
 const express = require('express');
@@ -37,11 +37,11 @@ app.get('/', (req, res) => {
     res.render('pages/index', { title: title });
 });
 
+
 app.get('/artist-search', (req, res) => {
-    console.log(req.query);
-    // res.send('pages/artist-search');
+
     spotifyApi
-        .searchArtists(req.query.artist, { limit: 10, offset: 0 })
+        .searchArtists(req.query.artist, {}) //{ limit: 10, offset: 0 }
         .then(data => {
 
             console.log('The received data from the API: ', data.body);
@@ -53,9 +53,47 @@ app.get('/artist-search', (req, res) => {
         .catch(err => console.log('The error while searching artists occurred: ', err));
 });
 
-// app.get('/contact', (req, res) => {
-//     res.render('contact')
-// });
+
+app.get('/albums/:artistId', (req, res, next) => {
+
+    spotifyApi.clientCredentialsGrant()
+        .then(data => spotifyApi.setAccessToken(data.body['access_token']))
+        .catch(error => console.log('Something went wrong when retrieving an access token', error));
+
+
+    spotifyApi
+        .getArtistAlbums(req.params.artistId, {}) //{ limit: 10, offset: 0 }
+        .then(data => {
+
+            // console.log('The received data from the API: ', data.body);
+            // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
+
+            // res.send(data.body);
+            res.render('pages/album-search-results', { title: title, albums: data.body });
+        })
+        .catch(err => console.log('The error while searching artists occurred: ', err));
+});
+
+
+app.get('/album-tracks/:albumId', (req, res, next) => {
+
+    spotifyApi.clientCredentialsGrant()
+        .then(data => spotifyApi.setAccessToken(data.body['access_token']))
+        .catch(error => console.log('Something went wrong when retrieving an access token', error));
+
+    spotifyApi
+        .getAlbumTracks(req.params.albumId, { limit: 50, offset: 0 })
+        .then(data => {
+
+            // console.log('The received data from the API: ', data.body);
+            // ----> 'HERE WHAT WE WANT TO DO AFTER RECEIVING THE DATA FROM THE API'
+
+            // res.send(data.body);
+            res.render('pages/album-tracks', { title: title, tracks: data.body });
+        })
+        .catch(err => console.log('The error while searching artists occurred: ', err));
+});
+
 
 
 //****************************************************************************************************************
